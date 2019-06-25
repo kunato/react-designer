@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {modes} from '../constants';
+import React, { Component } from 'react';
+import { modes } from '../constants';
 import Icon from '../Icon';
 import _ from 'lodash';
 
@@ -12,21 +12,19 @@ export default class Rect extends Vector {
       width: 5,
       height: 5,
       strokeWidth: 0,
-      fill: "blue",
+      fill: 'blue',
       radius: 0,
-      blendMode: "normal",
-      rotate: 0
-    }
+      blendMode: 'normal',
+      rotate: 0,
+    },
   };
 
   render() {
-    let {object, index} = this.props;
+    let { object, index } = this.props;
     return (
-      <rect style={this.getStyle()}
-         {...this.getObjectAttributes()}
-         rx={object.radius}
-         width={object.width}
-         height={object.height} />
+      <svg {...this.getObjectAttributes()} style={{ position: 'absolute' }}>
+        <rect x="0" y="0" width={object.width} height={object.height} />
+      </svg>
     );
   }
 }

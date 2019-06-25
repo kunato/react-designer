@@ -1,43 +1,28 @@
-import React, {Component} from 'react';
-import {modes} from '../constants';
+import React, { Component } from 'react';
+import { modes } from '../constants';
 import Icon from '../Icon';
 import _ from 'lodash';
 
-import {SizePanel, TextPanel,
-        StylePanel, ArrangePanel, ImagePanel} from '../panels';
-
+import { SizePanel, TextPanel, StylePanel, ArrangePanel, ImagePanel } from '../panels';
 
 export default class Vector extends Component {
-  static panels = [
-    SizePanel,
-    TextPanel,
-    StylePanel,
-    ImagePanel,
-    ArrangePanel
-  ];
+  static panels = [SizePanel, TextPanel, StylePanel, ImagePanel, ArrangePanel];
 
-  getStyle() {
-    let {object} = this.props;
-    return {
-      mixBlendMode: object.blendMode
-    }
-  }
-
-  getTransformMatrix({rotate, x, y, width, height}) {
-    if (rotate) {
-      let centerX = width / 2 + x;
-      let centerY = height / 2 + y;
-      return `rotate(${rotate} ${centerX} ${centerY})`;
-    }
+  getTransformMatrix({ rotate, x, y }) {
+    return `
+      translate(${x} ${y})
+      rotate(${rotate || 0})
+    `;
   }
 
   getObjectAttributes() {
-    let {object, onRender, ...rest} = this.props;
+    let { object, onRender, ...rest } = this.props;
+    const { x, y, ...objectRest } = object;
     return {
-      ...object,
+      ...objectRest,
       transform: this.getTransformMatrix(object),
       ref: onRender,
-      ...rest
+      ...rest,
     };
   }
 }

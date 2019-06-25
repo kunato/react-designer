@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {modes} from '../constants';
+import React, { Component } from 'react';
+import { modes } from '../constants';
 import Icon from '../Icon';
 import _ from 'lodash';
 
@@ -10,50 +10,49 @@ export default class Text extends Vector {
   static meta = {
     icon: <Icon icon={'text'} size={30} />,
     initial: {
-      text: "Type some text...",
+      text: 'Type some text...',
       rotate: 0,
-      fontWeight: "normal",
-      fontStyle: "normal",
-      textDecoration: "none",
-      fill: "black",
+      fontWeight: 'normal',
+      fontStyle: 'normal',
+      textDecoration: 'none',
+      fill: 'black',
       fontSize: 20,
-      fontFamily: "Open Sans"
-    }
+      fontFamily: 'Open Sans',
+    },
   };
 
   getStyle() {
-    let {object} = this.props;
+    let { object } = this.props;
     return {
-      ...super.getStyle(),
-      dominantBaseline: "central",
+      dominantBaseline: 'central',
       fontWeight: object.fontWeight,
       fontStyle: object.fontStyle,
       textDecoration: object.textDecoration,
       mixBlendMode: object.blendMode,
-      WebkitUserSelect: "none"
+      WebkitUserSelect: 'none',
     };
   }
 
-  getTransformMatrix({rotate, x, y}) {
-    return `rotate(${rotate} ${x} ${y})`;
-  }
-
   render() {
-    let {object, index} = this.props;
+    let { object } = this.props;
     WebFont.load({
       google: {
-        families: [object.fontFamily]
-      }
+        families: [object.fontFamily],
+      },
     });
-    const {rotate, ... restOfAttributes} = this.getObjectAttributes()
+    const { rotate, ...restOfAttributes } = this.getObjectAttributes();
     return (
-      <text style={this.getStyle()}
-         {...restOfAttributes}
-         textAnchor="right"
-         fontSize={object.fontSize}
-         fontFamily={object.fontFamily}>
-        {object.text}
-       </text>
+      <svg {...restOfAttributes} style={{ position: 'absolute' }}>
+        <text
+          y={`${object.fontSize / 2}`}
+          textAnchor="right"
+          style={{ ...this.getStyle() }}
+          fontSize={object.fontSize}
+          fontFamily={object.fontFamily}
+        >
+          {object.text}
+        </text>
+      </svg>
     );
   }
 }
